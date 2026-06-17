@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 import { ApiError, productQueryOptions } from "@/lib/api/products";
@@ -27,7 +28,11 @@ export const Route = createFileRoute("/products/$id")({
       { name: "description", content: `Details for product #${params.id}.` },
     ],
   }),
-  component: ProductDetail,
+  component: () => (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <ProductDetail />
+    </Suspense>
+  ),
   errorComponent: ({ error }) => (
     <div className="p-8 text-destructive">Failed to load product: {error.message}</div>
   ),

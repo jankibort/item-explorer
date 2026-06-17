@@ -137,8 +137,7 @@ function buildProductsPath({ page, q, category, sort }: ProductFilters): string 
 export const productsQueryOptions = (filters: ProductFilters) =>
   queryOptions({
     queryKey: ["products", filters] as const,
-    queryFn: ({ signal }) =>
-      http(buildProductsPath(filters), paginatedProductsSchema, signal),
+    queryFn: ({ signal }) => http(buildProductsPath(filters), paginatedProductsSchema, signal),
     staleTime: 30_000,
     placeholderData: keepPreviousData,
     retry: shouldRetry,

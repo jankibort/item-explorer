@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 
@@ -108,7 +108,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <Suspense fallback={<div className="p-8">Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </QueryClientProvider>
   );
 }
